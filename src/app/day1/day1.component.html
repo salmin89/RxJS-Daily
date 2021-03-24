@@ -6,7 +6,7 @@
   </label>
   <button>I'm a button</button>
 </p>
-<div class="focus">
+<div class="focus" #focusGroup>
   <h2>Track focus in this block</h2>
   <p>
     <select>
@@ -22,11 +22,11 @@
 
   <p>
     <label>
-      <input type="radio" />
+      <input type="radio" name="radio" />
       Option 1
     </label>
     <label>
-      <input type="radio" />
+      <input type="radio" name="radio" />
       Option 2
     </label>
   </p>
@@ -38,3 +38,11 @@
   </label>
   <button>I'm a button</button>
 </p>
+
+<hr />
+
+<h5>Current focus</h5>
+
+<div *ngIf="selected$ | async as selectedEl">
+  {{ selectedEl.nodeName }}
+</div>
