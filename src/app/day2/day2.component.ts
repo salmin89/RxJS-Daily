@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { PAGE_VISIBILITY } from './page-visibility.token';
 
 @Component({
   selector: 'app-day2',
@@ -8,11 +9,16 @@ import { map, tap } from 'rxjs/operators';
   styleUrls: ['./day2.component.scss'],
 })
 export class Day2Component implements OnInit {
-  visible$: Observable<boolean>;
-  constructor() {}
+  constructor(@Inject(PAGE_VISIBILITY) private readonly pageVisibility$: Observable<boolean>) {}
 
-  ngOnInit(): void {
-    this.visible$ = fromEvent(document, 'visibilitychange').pipe(map(() => document['hidden']));
-    this.visible$.subscribe(console.log);
+  unsubcribe = new Subject();
+
+  ngOnDestroy() {
+    this.unsubcribe.next();
+    this.unsubcribe.complete();
+  }
+
+  ngOnInit() {
+    this.pageVisibility$.pipe(takeUntil(this.unsubcribe)).subscribe(console.log);
   }
 }
