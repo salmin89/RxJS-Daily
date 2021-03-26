@@ -4,7 +4,12 @@
   <p><strong>Bonus task:</strong></p>
   Show user name instead of button upon successful login and disable button during server request.
 </blockquote>
-<p class="error">Error message goes here</p>
-<p>
-  <button>Submit</button>
-</p>
+<p class="error" *ngIf="error$ | async">Error message goes here</p>
+
+<p *ngIf="userName$ | async as userName; else loginTemplate">{{ userName }}</p>
+
+<ng-template #loginTemplate>
+  <p>
+    <button (click)="login()" [disabled]="loading$ | async">Submit</button>
+  </p>
+</ng-template>

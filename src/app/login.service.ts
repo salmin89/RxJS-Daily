@@ -11,7 +11,7 @@ export class LoginService extends Observable<string> {
       of(Math.random())
         .pipe(
           tap(() => console.log('Login request')),
-          delay(2000),
+          delay(1000),
           map((response) => {
             if (response < 0.5) {
               throw new Error('Login failed!');
