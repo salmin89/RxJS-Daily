@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { interval, Observable } from 'rxjs';
-import { endWith, map, take } from 'rxjs/operators';
+import { endWith, map, take, startWith } from 'rxjs/operators';
 
 @Injectable()
 export class LoadingService {
@@ -8,7 +8,8 @@ export class LoadingService {
     return interval(1000).pipe(
       take(5),
       map((tick) => (tick + 1) * 20),
-      endWith('Congratulations, you made it!')
+      endWith('Congratulations, you made it!'),
+      startWith(1)
     );
   }
 }

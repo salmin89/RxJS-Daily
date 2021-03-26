@@ -8,11 +8,13 @@
 
 <button class="button" (click)="onButtonClick()">Start loading</button>
 
-<p *ngIf="true; else loading">
-  {{ 'final result' }}
+<p *ngIf="complete$ | async as result; else loadingTemplate">
+  {{ result }}
 </p>
 
-<ng-template #loading>
-  <progress class="progress" [max]="100" [value]="50"></progress>
-  <div class="loading">Loading...</div>
+<ng-template #loadingTemplate>
+  <ng-container *ngIf="loading$ | async as loading">
+    <progress class="progress" [max]="100" [value]="50" [value]="loading"></progress>
+    <div class="loading">Loading...</div>
+  </ng-container>
 </ng-template>
