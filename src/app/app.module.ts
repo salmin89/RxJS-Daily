@@ -8,21 +8,12 @@ import { Day2Component } from './day2/day2.component';
 import { Day3Component } from './day3/day3.component';
 import { Day4Component } from './day4/day4.component';
 import { Day5Component } from './day5/day5.component';
+import { LoadingService } from './loading.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    Day1Component,
-    Day2Component,
-    Day3Component,
-    Day4Component,
-    Day5Component
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, Day1Component, Day2Component, Day3Component, Day4Component, Day5Component],
+  imports: [BrowserModule, AppRoutingModule],
+  providers: [LoadingService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
