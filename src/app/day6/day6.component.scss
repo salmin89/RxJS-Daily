@@ -12,6 +12,12 @@
   border: 1px rgb(194, 194, 194) solid;
   border-top: 0px;
   padding: 6px 10px;
+  &--selected {
+    background-color: lightgreen;
+  }
+  &--unavailable {
+    opacity: 0.4;
+  }
 }
 
 .seat:hover {

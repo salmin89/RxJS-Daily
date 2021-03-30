@@ -6,14 +6,27 @@
   <p>Hide seats and show the final cost after user clicks <i>buy</i> button.</p>
 </blockquote>
 
-<h3>Choose your seats</h3>
+<ng-container *ngIf="finalCost$ | async as finalCost; else choseTemplate">
+  <section class="final-cost">Final cost is $ {{ finalCost }}</section>
+</ng-container>
 
-<section class="cinema">
-  <button *tuiRepeatTimes="let index of 10" class="seat">{{ index + 1 }}</button>
-</section>
+<ng-template #choseTemplate>
+  <h3>Choose your seats</h3>
 
-Selected: {{ 0 }}
+  <ng-container *ngIf="selected$ | async as selected">
+    <section class="cinema" *ngIf="!(purchase$ | async)">
+      <button
+        *tuiRepeatTimes="let index of 10"
+        class="seat"
+        [ngClass]="{ 'seat--selected': selected[index] }"
+        (click)="select$.next(index)"
+      >
+        {{ index + 1 }}
+      </button>
+    </section>
 
-<button class="buy">Buy</button>
+    Selected: {{ getValues(selected).length }}
+  </ng-container>
 
-<section *ngIf="false" class="final-cost">Final cost is $ {{ 1 * 3 }}</section>
+  <button class="buy" (click)="buyBtnClick$.next()">Buy</button>
+</ng-template>
