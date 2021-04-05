@@ -14,9 +14,27 @@ import { Day7Component } from './day7/day7.component';
 
 import { LoadingService } from './loading.service';
 import { TuiRepeatTimesModule } from '@taiga-ui/cdk';
+import { Day8Component } from './day8/day8.component';
+import { Day9Component } from './day9/day9.component';
+import { Day10Component } from './day10/day10.component';
+import { FilterPipe } from './filter.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, TuiRepeatTimesModule],
-  declarations: [AppComponent, Day1Component, Day2Component, Day3Component, Day4Component, Day5Component, Day6Component, Day7Component],
+  imports: [BrowserModule, AppRoutingModule, TuiRepeatTimesModule, ReactiveFormsModule],
+  declarations: [
+    AppComponent,
+    Day1Component,
+    Day2Component,
+    Day3Component,
+    Day4Component,
+    Day5Component,
+    Day6Component,
+    Day7Component,
+    Day8Component,
+    Day9Component,
+    Day10Component,
+    FilterPipe,
+  ],
   providers: [LoadingService],
   bootstrap: [AppComponent],
 })
