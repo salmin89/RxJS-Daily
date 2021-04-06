@@ -1,10 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'filter',
-})
-export class FilterPipe implements PipeTransform {
-  transform(value: any, ...args: any[]): any {
-    return null;
+export type Mapper<T, G> = (item: T, ...args: any[]) => G;
+export type Matcher<I> = Mapper<I, boolean>;
+
+@Pipe({ name: 'filter' })
+export class FilterPipe<T> implements PipeTransform {
+  transform(items: ReadonlyArray<T>, matcher: Matcher<T>, ...args: any[]): T[] {
+    return items.filter((item) => matcher(item, ...args));
   }
 }

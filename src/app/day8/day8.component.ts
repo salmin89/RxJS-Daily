@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, OperatorFunction, of } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
+import { switchMap, debounceTime, scan, distinctUntilChanged, startWith } from 'rxjs/operators';
 
 function requestBackendEmulation(search: string): Observable<readonly string[]> {
   console.log('backend called');
@@ -19,12 +19,20 @@ function requestBackendEmulation(search: string): Observable<readonly string[]> 
   return of([]);
 }
 
-// TODO: code this operator function
 export function smartSearch<T>(
-  _getSearchFunction: (search: string) => Observable<readonly T[]>,
-  _searchDebouceTimeMs: number = 400
+  getSearchFunction: (search: string) => Observable<readonly T[]>,
+  searchDebouceTimeMs: number = 400
 ): OperatorFunction<string, readonly T[] | null> {
-  return (source) => source.pipe(mapTo([]));
+  return (source) =>
+    source.pipe(
+      debounceTime(searchDebouceTimeMs),
+      scan((previousSearched, current) => {
+        return previousSearched !== '' && current.startsWith(previousSearched) ? previousSearched : current;
+      }, ''),
+      distinctUntilChanged(),
+      switchMap(getSearchFunction),
+      startWith([])
+    );
 }
 
 @Component({
