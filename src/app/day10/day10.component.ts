@@ -9,22 +9,26 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./day10.component.scss'],
 })
 export class Day10Component {
-  private readonly target$$ = new Subject<HTMLElement>();
-  private readonly target$ = this.target$$.pipe(shareReplay(1));
-
   @ViewChild('colorPicker')
   set colorPicker(ref: ElementRef<HTMLDivElement> | undefined) {
     if (ref) {
+      // 0. once we have the ref we can trigger the stream
       this.target$$.next(ref.nativeElement);
     }
   }
 
+  // 1. the element appears
+  private readonly target$$ = new Subject<HTMLElement>();
+
+  // 2. Share the latest target, once
+  private readonly target$ = this.target$$.pipe(shareReplay(1));
+
+  // 3. Three individual streams
   private readonly mouseDown$ = this.target$.pipe(switchMap((target) => fromEvent<MouseEvent>(target, 'mousedown')));
-
   private readonly mouseMove$ = this.target$.pipe(switchMap((target) => fromEvent<MouseEvent>(target, 'mousemove')));
-
   private readonly mouseUp$ = fromEvent<MouseEvent>(this.documentRef, 'mouseup');
 
+  // 4. The position is dependent on the above streams
   public readonly pos$ = this.mouseMove$.pipe(
     skipUntil(this.mouseDown$),
     takeUntil(this.mouseUp$),
