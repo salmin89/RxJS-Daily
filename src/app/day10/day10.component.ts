@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
-import { combineLatest, fromEvent, Observable, Subject } from 'rxjs';
-import { tap, debounceTime, throttleTime, mapTo, map, skipUntil, takeUntil, repeat } from 'rxjs/operators';
+import { Component, ViewChild, ElementRef, Inject } from '@angular/core';
+import { fromEvent, Subject } from 'rxjs';
+import { skipUntil, takeUntil, repeat, startWith, switchMap, shareReplay } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -8,29 +8,29 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './day10.component.html',
   styleUrls: ['./day10.component.scss'],
 })
-export class Day10Component implements OnInit {
-  PALETTE_WIDTH = 200;
-  PALETTE_HEIGHT = 200;
-  HUE = 197;
+export class Day10Component {
+  private readonly target$$ = new Subject<HTMLElement>();
+  private readonly target$ = this.target$$.pipe(shareReplay(1));
 
-  @ViewChild('colorPicker') colorPicker: ElementRef<any>;
+  @ViewChild('colorPicker')
+  set colorPicker(ref: ElementRef<HTMLDivElement> | undefined) {
+    if (ref) {
+      this.target$$.next(ref.nativeElement);
+    }
+  }
 
-  mouseMove$: Observable<{ offsetX: number; offsetY: number }>;
+  private readonly mouseDown$ = this.target$.pipe(switchMap((target) => fromEvent<MouseEvent>(target, 'mousedown')));
+
+  private readonly mouseMove$ = this.target$.pipe(switchMap((target) => fromEvent<MouseEvent>(target, 'mousemove')));
+
+  private readonly mouseUp$ = fromEvent<MouseEvent>(this.documentRef, 'mouseup');
+
+  public readonly pos$ = this.mouseMove$.pipe(
+    skipUntil(this.mouseDown$),
+    takeUntil(this.mouseUp$),
+    repeat(),
+    startWith({ offsetX: 50, offsetY: 50 })
+  );
 
   constructor(@Inject(DOCUMENT) private readonly documentRef: Document) {}
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {
-    const move$ = fromEvent(this.colorPicker.nativeElement, 'mousemove').pipe(
-      throttleTime(50),
-      map(({ offsetX, offsetY }) => ({ offsetX, offsetY }))
-    );
-    const down$ = fromEvent(this.colorPicker.nativeElement, 'mousedown').pipe(map(() => true));
-    const up$ = fromEvent(this.documentRef, 'mouseup').pipe(map(() => false));
-
-    this.mouseMove$ = move$.pipe(skipUntil(down$), takeUntil(up$), repeat());
-
-    this.mouseMove$.subscribe(console.log);
-  }
 }

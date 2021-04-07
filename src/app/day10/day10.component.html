@@ -4,6 +4,6 @@
   <p><strong>Additional task:</strong> show the HEX code of selected color under palette</p>
 </blockquote>
 
-<div class="color-picker" #colorPicker>
-  <div class="circle" *ngIf="mouseMove$ | async as pos" [style.left.px]="pos.offsetX" [style.top.px]="pos.offsetY"></div>
+<div #colorPicker *ngIf="pos$ | async as pos" class="color-picker">
+  <div class="circle" [style.left.px]="pos.offsetX" [style.top.px]="pos.offsetY"></div>
 </div>
