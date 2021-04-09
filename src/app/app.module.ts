@@ -19,8 +19,10 @@ import { Day9Component } from './day9/day9.component';
 import { Day10Component } from './day10/day10.component';
 import { FilterPipe } from './filter.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Day11Component } from './day11/day11.component';
+import { NotificationComponent } from './notification/notification.component';
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, TuiRepeatTimesModule, ReactiveFormsModule],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, TuiRepeatTimesModule, ReactiveFormsModule],
   declarations: [
     AppComponent,
     Day1Component,
@@ -34,6 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     Day9Component,
     Day10Component,
     FilterPipe,
+    Day11Component,
+    NotificationComponent,
   ],
   providers: [LoadingService],
   bootstrap: [AppComponent],
