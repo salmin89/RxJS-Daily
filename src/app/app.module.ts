@@ -21,6 +21,9 @@ import { FilterPipe } from './filter.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Day11Component } from './day11/day11.component';
 import { NotificationComponent } from './notification/notification.component';
+import { Day12Component } from './day12/day12.component';
+import { PortalComponent } from './portal/portal.component';
+import { ModalService } from './modal.service';
 @NgModule({
   imports: [BrowserModule, FormsModule, AppRoutingModule, TuiRepeatTimesModule, ReactiveFormsModule],
   declarations: [
@@ -38,8 +41,10 @@ import { NotificationComponent } from './notification/notification.component';
     FilterPipe,
     Day11Component,
     NotificationComponent,
+    Day12Component,
+    PortalComponent,
   ],
-  providers: [LoadingService],
+  providers: [LoadingService, ModalService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
