@@ -24,8 +24,13 @@ import { NotificationComponent } from './notification/notification.component';
 import { Day12Component } from './day12/day12.component';
 import { PortalComponent } from './portal/portal.component';
 import { ModalService } from './modal.service';
+import { Day13Component } from './day13/day13.component';
+import { ElasticStickyModule } from './elastic-sticky/elastic-sticky.module';
+import { Day14Component } from './day14/day14.component';
+import { Day15Component } from './day15/day15.component';
+import { FocusTypeDirective } from './day15/focus-type.directive';
 @NgModule({
-  imports: [BrowserModule, FormsModule, AppRoutingModule, TuiRepeatTimesModule, ReactiveFormsModule],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, TuiRepeatTimesModule, ReactiveFormsModule, ElasticStickyModule],
   declarations: [
     AppComponent,
     Day1Component,
@@ -43,6 +48,10 @@ import { ModalService } from './modal.service';
     NotificationComponent,
     Day12Component,
     PortalComponent,
+    Day13Component,
+    Day14Component,
+    Day15Component,
+    FocusTypeDirective,
   ],
   providers: [LoadingService, ModalService],
   bootstrap: [AppComponent],

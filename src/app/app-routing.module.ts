@@ -12,6 +12,9 @@ import { Day9Component } from './day9/day9.component';
 import { Day10Component } from './day10/day10.component';
 import { Day11Component } from './day11/day11.component';
 import { Day12Component } from './day12/day12.component';
+import { Day13Component } from './day13/day13.component';
+import { Day14Component } from './day14/day14.component';
+import { Day15Component } from './day15/day15.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +64,18 @@ export const routes: Routes = [
   {
     path: 'day12',
     component: Day12Component,
+  },
+  {
+    path: 'day13',
+    component: Day13Component,
+  },
+  {
+    path: 'day14',
+    component: Day14Component,
+  },
+  {
+    path: 'day15',
+    component: Day15Component,
   },
 ];
 
